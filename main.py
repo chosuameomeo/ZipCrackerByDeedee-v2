@@ -272,7 +272,7 @@ class MainWindow(QMainWindow):
         self.txt_log.append(f"THÀNH CÔNG! PASS: {password}")
         self.txt_log.append("="*30)
 
-        # CẬP NHẬT DANH SÁCH FILE VÀO LIST WIDGET
+        # cập nhật danh sách file
         for file_name in contents:
             item = QListWidgetItem(file_name)
             # thêm icon 
