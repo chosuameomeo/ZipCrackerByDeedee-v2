@@ -55,7 +55,7 @@ class CrackerWorker(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Super Vip Pro Zip Cracker")
+        self.setWindowTitle("My Zip Cracker")
         self.setGeometry(100, 100, 800, 650)
         self.setAcceptDrops(True)
 
@@ -84,16 +84,13 @@ class MainWindow(QMainWindow):
         ctl_layout = QVBoxLayout()
         
         btn_row1 = QHBoxLayout()
-        self.btn_zip = QPushButton("📁 Chọn File ZIP")
-        self.btn_zip.clicked.connect(self.browse_zip)
-        btn_row1.addWidget(self.btn_zip)
         
         self.btn_dict = QPushButton("📖 Chọn Từ Điển")
         self.btn_dict.clicked.connect(self.browse_dict)
         btn_row1.addWidget(self.btn_dict)
         ctl_layout.addLayout(btn_row1)
 
-        self.lbl_info = QLabel("Chưa chọn file...")
+        self.lbl_info = QLabel("Vui lòng kéo thả file ZIP vào ô bên trái...")
         self.lbl_info.setStyleSheet("color: #666; font-style: italic;")
         ctl_layout.addWidget(self.lbl_info)
 
@@ -131,6 +128,7 @@ class MainWindow(QMainWindow):
         self.list_files = QListWidget()
         self.list_files.setStyleSheet("font-size: 13px; padding: 5px;")
         self.list_files.setAlternatingRowColors(True)
+
         # kết nối sự kiện click đúp
         self.list_files.itemDoubleClicked.connect(self.open_extracted_file)
         
@@ -219,10 +217,6 @@ class MainWindow(QMainWindow):
         if files and files[0].lower().endswith('.zip'):
             self.load_zip(files[0])
 
-    def browse_zip(self):
-        f, _ = QFileDialog.getOpenFileName(self, "Chọn ZIP", "", "ZIP Files (*.zip)")
-        if f: self.load_zip(f)
-
     def browse_dict(self):
         f, _ = QFileDialog.getOpenFileName(self, "Chọn Từ Điển", "", "Text (*.txt);;All (*)")
         if f:
@@ -244,8 +238,7 @@ class MainWindow(QMainWindow):
 
     def start_cracking(self):
         self.btn_start.setEnabled(False)
-        self.btn_zip.setEnabled(False)
-        self.btn_dict.setEnabled(False)
+        self.btn_dict.setEnabled(False) 
         self.list_files.clear()
         self.txt_log.clear()
         self.found_password = None # reset mật khẩu cũ
@@ -276,7 +269,7 @@ class MainWindow(QMainWindow):
         self.found_password = password # lưu mật khẩu lại
         
         self.txt_log.append("\n" + "="*30)
-        self.txt_log.append(f"✅ THÀNH CÔNG! PASS: {password}")
+        self.txt_log.append(f"THÀNH CÔNG! PASS: {password}")
         self.txt_log.append("="*30)
 
         # CẬP NHẬT DANH SÁCH FILE VÀO LIST WIDGET
@@ -302,8 +295,7 @@ class MainWindow(QMainWindow):
 
     def reset_ui(self):
         self.btn_start.setEnabled(True)
-        self.btn_zip.setEnabled(True)
-        self.btn_dict.setEnabled(True)
+        self.btn_dict.setEnabled(True) 
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
